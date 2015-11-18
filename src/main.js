@@ -23,9 +23,10 @@ export function jsx(name, attributes, ...children) {
         element.addEventListener(attrName.substr(2).toLowerCase(), attributes[attrName])
       } else {
         if (attrName === 'className') {
-          attrName = 'class'
+          element.setAttribute('class', attributes[attrName])
+        } else {
+          element.setAttribute(attrName, attributes[attrName])
         }
-        element.setAttribute(attrName, attributes[attrName])
       }
     }
   }
