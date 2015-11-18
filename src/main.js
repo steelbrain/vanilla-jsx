@@ -14,7 +14,7 @@ function appendChild(element, child) {
   }
 }
 
-export function jsx(name, attributes, ...children) {
+module.exports.jsx = function jsx(name, attributes, ...children) {
   const element = document.createElement(name)
 
   for (let attrName in attributes) {
