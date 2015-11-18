@@ -8,6 +8,7 @@ Vanilla-JSX is a library that converts JSX into vanilla HTML Elements.
  - Converts JSX to vanilla HTMLElements
  - Translates className attribute into class
  - Supports arrays as children
+ - Supports event listeners as attributes like `<div onClick={someFunction}></div>`
 
 #### Example
 ```
