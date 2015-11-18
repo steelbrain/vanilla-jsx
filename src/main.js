@@ -19,6 +19,9 @@ module.exports.jsx = function(name, attributes, ...children) {
 
   for (let attrName in attributes) {
     if (attributes.hasOwnProperty(attrName)) {
+      if (attrName === 'className') {
+        attrName = 'class'
+      }
       element.setAttribute(attrName, attributes[attrName])
     }
   }
