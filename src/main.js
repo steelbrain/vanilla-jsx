@@ -14,15 +14,19 @@ function appendChild(element, child) {
   }
 }
 
-module.exports.jsx = function(name, attributes, ...children) {
+export function jsx(name, attributes, ...children) {
   const element = document.createElement(name)
 
   for (let attrName in attributes) {
     if (attributes.hasOwnProperty(attrName)) {
-      if (attrName === 'className') {
-        attrName = 'class'
+      if (attrName.substr(0, 2) === 'on') {
+        element.addEventListener(attrName.substr(2).toLowerCase(), attributes[attrName])
+      } else {
+        if (attrName === 'className') {
+          attrName = 'class'
+        }
+        element.setAttribute(attrName, attributes[attrName])
       }
-      element.setAttribute(attrName, attributes[attrName])
     }
   }
 
