@@ -1,0 +1,23 @@
+{
+  "name": "vanilla-jsx",
+  "version": "0.0.1",
+  "description": "A JSX to vanilla provider",
+  "main": "lib/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "babel src/main.js > lib/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/steelbrain/sweet-jsx.git"
+  },
+  "keywords": [
+    "jsx"
+  ],
+  "author": "steelbrain",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/steelbrain/sweet-jsx/issues"
+  },
+  "homepage": "https://github.com/steelbrain/sweet-jsx#readme"
+}
