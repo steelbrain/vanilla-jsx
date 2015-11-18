@@ -1,3 +1,7 @@
+#### 1.1.1
+
+ - Accepts null as attributes (JSX compat)
+
 #### 1.1.0
 
  - Added support for event subscriptions

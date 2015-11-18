@@ -21,3 +21,8 @@ describe 'vanilla-jsx', ->
     el = jsx('div', {'onClick': listener})
     el.dispatchEvent(new MouseEvent('click'))
     expect(listener).toHaveBeenCalled()
+
+  it 'accepts null as attribute', ->
+    expect ->
+      jsx('div', null)
+    .not.toThrow()

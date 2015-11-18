@@ -17,6 +17,7 @@ function appendChild(element, child) {
 module.exports.jsx = function jsx(name, attributes, ...children) {
   const element = document.createElement(name)
 
+  if (typeof attributes === 'object' && attributes)
   for (let attrName in attributes) {
     if (attributes.hasOwnProperty(attrName)) {
       if (attrName.substr(0, 2) === 'on') {
