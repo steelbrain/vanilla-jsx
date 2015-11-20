@@ -23,7 +23,7 @@ module.exports.jsx = function jsx(name, attributes, ...children) {
       if (attrName.substr(0, 2) === 'on') {
         element.addEventListener(attrName.substr(2).toLowerCase(), attributes[attrName])
       } else if (attrName.substr(0, 1) === '$') {
-        element[attrName] = attributes[attrName]
+        element[attrName.substr(1)] = attributes[attrName]
       } else {
         if (attrName === 'className') {
           element.setAttribute('class', attributes[attrName])
