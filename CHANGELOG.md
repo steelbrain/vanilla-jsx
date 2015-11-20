@@ -1,3 +1,7 @@
+#### 1.1.2
+
+ - Supports setting properties via JSX
+
 #### 1.1.1
 
  - Accepts null as attributes (JSX compat)
