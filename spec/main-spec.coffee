@@ -26,3 +26,8 @@ describe 'vanilla-jsx', ->
     expect ->
       jsx('div', null)
     .not.toThrow()
+
+  it 'supports setting props directly', ->
+    prop = () ->
+    el = jsx('div', {'$setCount': prop})
+    expect(el.setCount).toBe(prop)
