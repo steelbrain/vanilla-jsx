@@ -1,3 +1,7 @@
+#### 1.1.3
+
+ - Fix an occasional bug where children won't be appended properly
+
 #### 1.1.2
 
  - Supports setting properties via JSX
