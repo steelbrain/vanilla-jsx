@@ -31,3 +31,31 @@ describe 'vanilla-jsx', ->
     prop = () ->
     el = jsx('div', {'$setCount': prop})
     expect(el.setCount).toBe(prop)
+
+  it 'works well with nested children', ->
+    el = jsx(
+      'div',
+      null,
+      'ABC ',
+      jsx(
+        'span',
+        null,
+        'First ',
+        jsx(
+          'child',
+          null,
+          'First'
+        ),
+        jsx(
+          'child',
+          null,
+          'Second'
+        )
+      ),
+      jsx(
+        'span',
+        null,
+        'Second'
+      )
+    )
+    expect(el.outerHTML).toBe('<div>ABC <span>First <child>First</child><child>Second</child></span><span>Second</span></div>')
