@@ -1,17 +1,13 @@
 'use strict'
 
-function appendChild(element, child) {
-  if (typeof child === 'object' && typeof child.length === 'number') {
-    Array.prototype.forEach.call(child, function(nestedChild) {
-      appendChild(element, nestedChild)
-    })
-  } else {
+function appendChild(parent, children) {
+  children.forEach(function(child) {
     if (typeof child === 'string') {
-      element.appendChild(document.createTextNode(child))
+      parent.appendChild(document.createTextNode(child))
     } else {
-      element.appendChild(child)
+      parent.appendChild(child)
     }
-  }
+  })
 }
 
 module.exports.jsx = function jsx(name, attributes, ...children) {
