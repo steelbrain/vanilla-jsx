@@ -21,6 +21,10 @@ function jsx(name, attributes, ...children) {
   children.forEach(function(child) {
     if (typeof child === 'string') {
       element.appendChild(document.createTextNode(child))
+    } else if (child.constructor.name === 'Array') {
+      child.forEach(function(nestedChild) {
+        element.appendChild(nestedChild)
+      })
     } else {
       element.appendChild(child)
     }
