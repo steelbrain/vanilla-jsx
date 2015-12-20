@@ -1,15 +1,5 @@
 'use strict'
 
-function appendChild(parent, children) {
-  children.forEach(function(child) {
-    if (typeof child === 'string') {
-      parent.appendChild(document.createTextNode(child))
-    } else {
-      parent.appendChild(child)
-    }
-  })
-}
-
 module.exports.jsx = function jsx(name, attributes, ...children) {
   const element = document.createElement(name)
 
@@ -30,7 +20,13 @@ module.exports.jsx = function jsx(name, attributes, ...children) {
     }
   }
 
-  appendChild(element, children)
+  children.forEach(function(child) {
+    if (typeof child === 'string') {
+      element.appendChild(document.createTextNode(child))
+    } else {
+      element.appendChild(child)
+    }
+  })
 
   return element
 }
