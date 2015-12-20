@@ -1,15 +1,13 @@
 'use strict'
 
-module.exports.jsx = function jsx(name, attributes, ...children) {
+function jsx(name, attributes, ...children) {
   const element = document.createElement(name)
 
   if (typeof attributes === 'object' && attributes)
   for (let attrName in attributes) {
     if (attributes.hasOwnProperty(attrName)) {
-      if (attrName.substr(0, 2) === 'on') {
-        element.addEventListener(attrName.substr(2).toLowerCase(), attributes[attrName])
-      } else if (attrName.substr(0, 1) === '$') {
-        element[attrName.substr(1)] = attributes[attrName]
+      if (attrName.substr(0, 3) === 'on-') {
+        element.addEventListener(attrName.substr(3).toLowerCase(), attributes[attrName])
       } else {
         if (attrName === 'className') {
           element.setAttribute('class', attributes[attrName])
@@ -23,6 +21,10 @@ module.exports.jsx = function jsx(name, attributes, ...children) {
   children.forEach(function(child) {
     if (typeof child === 'string') {
       element.appendChild(document.createTextNode(child))
+    } else if (child.constructor.name === 'Array') {
+      child.forEach(function(nestedChild) {
+        element.appendChild(nestedChild)
+      })
     } else {
       element.appendChild(child)
     }
@@ -30,3 +32,17 @@ module.exports.jsx = function jsx(name, attributes, ...children) {
 
   return element
 }
+
+function process(element) {
+  // Processes the ref attributes
+
+  element.refs = {}
+  Array.prototype.forEach.call(element.querySelectorAll('[ref]'), function(child) {
+    element.refs[child.getAttribute('ref')] = child
+    child.removeAttribute('ref')
+  })
+
+  return element
+}
+
+module.exports = {jsx, process}

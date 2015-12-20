@@ -1,3 +1,10 @@
+#### 2.0.0
+
+ - Breaking Change: Rename onClick to on-click
+ - Breaking Change: Drop support for $ attributes
+ - Add support for `ref` attribute with `process` method
+ - Add support for arrays as children
+
 #### 1.1.3
 
  - Fix an occasional bug where children won't be appended properly
