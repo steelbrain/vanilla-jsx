@@ -1,5 +1,5 @@
 describe 'vanilla-jsx', ->
-  {jsx} = require('..')
+  {jsx, process} = require('..')
 
   it 'returns HTMLElements', ->
     el = jsx('div', {})
@@ -54,3 +54,42 @@ describe 'vanilla-jsx', ->
       )
     )
     expect(el.outerHTML).toBe('<div>ABC <span>First <child>First</child><child>Second</child></span><span>Second</span></div>')
+
+  it 'accepts arrays as children', ->
+    el = jsx(
+      'div',
+      null,
+      'ABC ',
+      jsx(
+        'span',
+        null,
+        'First ',
+        [jsx(
+          'child',
+          null,
+          'First'
+        ),
+          jsx(
+            'child',
+            null,
+            'Second'
+          )]
+      ),
+      jsx(
+        'span',
+        null,
+        'Second'
+      )
+    )
+    expect(el.outerHTML).toBe('<div>ABC <span>First <child>First</child><child>Second</child></span><span>Second</span></div>')
+
+  it 'supports ref attribute', ->
+    el = process(jsx(
+      'span',
+      null,
+      jsx(
+        'div',
+        {ref: 'wow'}
+      )
+    ))
+    expect(el.refs.wow instanceof HTMLElement).toBe(true)
