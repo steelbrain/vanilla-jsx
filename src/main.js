@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports.jsx = function jsx(name, attributes, ...children) {
+function jsx(name, attributes, ...children) {
   const element = document.createElement(name)
 
   if (typeof attributes === 'object' && attributes)
@@ -30,3 +30,17 @@ module.exports.jsx = function jsx(name, attributes, ...children) {
 
   return element
 }
+
+function process(element) {
+  // Processes the ref attributes
+
+  element.refs = {}
+  Array.prototype.forEach.call(element.querySelectorAll('[ref]'), function(child) {
+    element.refs[child.getAttribute('ref')] = child
+    child.removeAttribute('ref')
+  })
+
+  return element
+}
+
+module.exports = {jsx, process}
