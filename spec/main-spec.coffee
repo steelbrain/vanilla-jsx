@@ -18,7 +18,7 @@ describe 'vanilla-jsx', ->
 
   it 'adds event listeners', ->
     listener = jasmine.createSpy('jsx.listener')
-    el = jsx('div', {'onClick': listener})
+    el = jsx('div', {'on-click': listener})
     el.dispatchEvent(new MouseEvent('click'))
     expect(listener).toHaveBeenCalled()
 
@@ -26,11 +26,6 @@ describe 'vanilla-jsx', ->
     expect ->
       jsx('div', null)
     .not.toThrow()
-
-  it 'supports setting props directly', ->
-    prop = () ->
-    el = jsx('div', {'$setCount': prop})
-    expect(el.setCount).toBe(prop)
 
   it 'works well with nested children', ->
     el = jsx(
