@@ -7,37 +7,41 @@ Vanilla-JSX is a library that converts JSX into vanilla HTML Elements.
 
  - Converts JSX to vanilla HTMLElements
  - Translates className attribute into class
- - Supports arrays as children
- - Supports event listeners as attributes like `<div onClick={someFunction}></div>`
- - Supports setting props, starting with `$` like `<div $setCount={someFunction}></div>`
+ - Supports event listeners as attributes like `<div on-click={someFunction}></div>`
+ - Supports `ref` attribute with `process` helper
+
+#### API
+
+```js
+// Responsible for creating HTML Elements from JSX
+export function jsx(name, attributes, ...children): HTMLElement {}
+// Responsible for processing refs from output of jsx function
+export function process(element): HTMLElement {}
+
+```
 
 #### Example
 ```js
 'use babel'
-/** @jsx vanilla.jsx */
+
 import vanilla from 'vanilla-jsx'
+/** @jsx vanilla.jsx */
 
-const el = <div class="wow">Something <span>Special</span></div>
-console.log(el instance HTMLElement) // "true"
-console.log(el.constructor.name === 'HTMLDivElement') // "true"
-console.log(el.innerHTML) // "Something <span>Special</span>"
-```
-
-The above is equivalent to this in vanilla
-
-```js
-'use babel'
-
-const el = document.createElement('div')
-const elSpan = document.createElement('span')
-
-elSpan.textContent = "Special"
-el.appendChild(document.createTextNode("Something "))
-el.appendChild(elSpan)
-
-console.log(el instance HTMLElement) // "true"
-console.log(el.constructor.name === 'HTMLDivElement') // "true"
-console.log(el.innerHTML) // "Something <span>Special</span>"
+export class Message {
+  constructor(message) {
+    this.element = Message.getElement()
+    console.log(this.element instanceof HTMLElement)
+    // ^ true!
+  }
+  getElement(message) {
+    return <div>
+      <span>{message.name}</span>
+      <span>{message.text}</span>
+      <span>{message.filePath}</span>
+      {message.trace.map(Message.getElement)}
+    </div>
+  }
+}
 ```
 
 #### LICENSE
