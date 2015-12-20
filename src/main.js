@@ -8,8 +8,6 @@ function jsx(name, attributes, ...children) {
     if (attributes.hasOwnProperty(attrName)) {
       if (attrName.substr(0, 3) === 'on-') {
         element.addEventListener(attrName.substr(3).toLowerCase(), attributes[attrName])
-      } else if (attrName.substr(0, 1) === '$') {
-        element[attrName.substr(1)] = attributes[attrName]
       } else {
         if (attrName === 'className') {
           element.setAttribute('class', attributes[attrName])
