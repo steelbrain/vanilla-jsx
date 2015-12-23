@@ -33,7 +33,7 @@ export class Message {
     console.log(this.element instanceof HTMLElement)
     // ^ true!
   }
-  getElement(message) {
+  static getElement(message) {
     return <div>
       <span>{message.name}</span>
       <span>{message.text}</span>

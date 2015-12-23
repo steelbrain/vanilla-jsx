@@ -1,7 +1,7 @@
 {
   "name": "vanilla-jsx",
   "version": "2.0.0",
-  "description": "A JSX to vanilla provider",
+  "description": "JSX in, HTMLElements out",
   "main": "lib/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/steelbrain/sweet-jsx.git"
+    "url": "git+https://github.com/steelbrain/vanilla-jsx.git"
   },
   "keywords": [
     "jsx"
@@ -17,7 +17,7 @@
   "author": "steelbrain",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/steelbrain/sweet-jsx/issues"
+    "url": "https://github.com/steelbrain/vanilla-jsx/issues"
   },
-  "homepage": "https://github.com/steelbrain/sweet-jsx#readme"
+  "homepage": "https://github.com/steelbrain/vanilla-jsx#readme"
 }
