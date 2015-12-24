@@ -1,3 +1,11 @@
+#### 2.0.2
+
+ - Improve support for nested children
+
+#### 2.0.1
+
+ - Clarified a few bits in the README
+
 #### 2.0.0
 
  - Breaking Change: Rename onClick to on-click
