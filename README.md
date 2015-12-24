@@ -15,7 +15,7 @@ Vanilla-JSX is a library that converts JSX into vanilla HTML Elements.
 ```js
 // Responsible for creating HTML Elements from JSX
 export function jsx(name, attributes, ...children): HTMLElement {}
-// Responsible for processing refs from output of jsx function
+// To be executed on result from JSX method
 export function process(element): HTMLElement {}
 
 ```
@@ -34,12 +34,12 @@ export class Message {
     // ^ true!
   }
   static getElement(message) {
-    return <div>
+    return vanilla.process(<div>
       <span>{message.name}</span>
       <span>{message.text}</span>
       <span>{message.filePath}</span>
       {message.trace.map(Message.getElement)}
-    </div>
+    </div>)
   }
 }
 ```
