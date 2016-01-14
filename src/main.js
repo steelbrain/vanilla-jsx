@@ -3,6 +3,8 @@
 (function() {
   'use strict'
 
+  let escapeHTML = null
+
   class Component {
     constructor() {
       this._element = null
@@ -32,14 +34,62 @@
       }
       this._element = element
     }
-    renderToString() {
-
+    renderToString(...params) {
+      if (escapeHTML === null) {
+        escapeHTML = require('escape-html')
+      }
+      let element = null
+      if (params.length === 1) {
+        element = this.renderView(params[0])
+      } else if (params.length === 2) {
+        element = this.renderView(params[0], params[1])
+      } else if (params.length === 3) {
+        element = this.renderView(params[0], params[1], params[2])
+      } else if (params.length === 4) {
+        element = this.renderView(params[0], params[1], params[2])
+      } else {
+        element = this.renderView.apply(this, params)
+      }
+      return createStringElements(element)
     }
     dispose() {
       this._element = null
     }
   }
 
+  function createStringElements(element) {
+    if (typeof element !== 'object' || element === null || !Array.isArray(element.children)) {
+      throw new Error('Invalid element provided', element)
+    }
+    const content = []
+    const attributes = []
+    if (element.attributes !== null) {
+      for (let key in element.attributes) {
+        if (key === 'className') {
+          key = 'class'
+        }
+        const value = element.attributes[key]
+        attributes.push(escapeHTML(key) + '=' + escape(value))
+      }
+    }
+    const childrenLength = element.children.length
+    if (childrenLength) {
+      for (let i = 0; i < childrenLength; ++i) {
+        const nestedChildren = [].concat(element.children[i])
+        const nestedChildrenLength = nestedChildren.length
+        if (nestedChildrenLength === 1) {
+          const nestedChild = nestedChildren[0]
+          content.push(typeof nestedChild === 'object' ? createStringElements(nestedChild) : escapeHTML(nestedChild))
+        } else {
+          for (let n = 0; n < nestedChildrenLength; ++n) {
+            const nestedChild = nestedChildren[n]
+            content.push(typeof nestedChild === 'object' ? createStringElements(nestedChild) : escapeHTML(nestedChild))
+          }
+        }
+      }
+    }
+    return `<${element.name}${attributes.length ? ' ' + attributes.join(' ') : ''}>${content.join('')}</${element.name}>`
+  }
   function createDOMElements(element) {
     if (typeof element !== 'object' || element === null || !Array.isArray(element.children)) {
       throw new Error('Invalid element provided', element)
