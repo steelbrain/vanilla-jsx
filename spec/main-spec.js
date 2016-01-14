@@ -53,7 +53,7 @@ describe('Vanilla-JSX', function() {
     }).toThrow()
   })
 
-  describe('element', function() {
+  describe('rendering', function() {
     it('triggers render', function() {
       let triggered = false
       const Component = component({
@@ -137,5 +137,58 @@ describe('Vanilla-JSX', function() {
     })
     const inst = new Component()
     expect(inst.element.className).toBe('test')
+  })
+  it('attaches event listeners', function() {
+    const listener = jasmine.createSpy('vanilla-jsx-event-listener')
+    const Component = component({
+      renderView: function() {
+        return <div on-click={listener}></div>
+      }
+    })
+    const inst = new Component()
+    inst.element.dispatchEvent(new MouseEvent('click'))
+    expect(listener).toHaveBeenCalled()
+  })
+  it('works with array children', function() {
+    const Component = component({
+      renderView: function() {
+        const items = [1, 2,3]
+        return <div>{items.map(i => <span>{i}</span>)}</div>
+      }
+    })
+    const inst = new Component()
+    expect(inst.element.childNodes.length).toBe(3)
+    expect(inst.element.childNodes[0].tagName).toBe('SPAN')
+    expect(inst.element.childNodes[0].textContent).toBe('1')
+    expect(inst.element.childNodes[1].tagName).toBe('SPAN')
+    expect(inst.element.childNodes[1].textContent).toBe('2')
+    expect(inst.element.childNodes[2].tagName).toBe('SPAN')
+    expect(inst.element.childNodes[2].textContent).toBe('3')
+  })
+  it('supports ref attribute', function() {
+    const Component = component({
+      renderView: function() {
+        return <div><span><a ref="link" href="#">Wow</a></span></div>
+      }
+    })
+    const inst = new Component()
+    expect(inst.element.refs.link).toBe(inst.element.childNodes[0].childNodes[0])
+    expect(inst.element.refs.link.hasAttribute('ref')).toBe(false)
+  })
+  it('passes parameters from render to renderView', function() {
+    const params = [{}, {}, {}]
+    let wasCalled = false
+    const Component = component({
+      renderView: function(param1, param2, param3) {
+        wasCalled = true
+        expect(param1).toBe(params[0])
+        expect(param2).toBe(params[1])
+        expect(param3).toBe(params[2])
+        return <div></div>
+      }
+    })
+    const inst = new Component()
+    inst.render(params[0], params[1], params[2])
+    expect(wasCalled).toBe(true)
   })
 })
