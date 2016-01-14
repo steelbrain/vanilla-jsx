@@ -223,4 +223,31 @@ describe('Vanilla-JSX', function() {
     inst.renderToString(params[0], params[1], params[2])
     expect(wasCalled).toBe(true)
   })
+  it('passes parameters from given object to view prototype', function() {
+    let num = 0
+    const Component = component({
+      renderView: function() {
+        this.add(2)
+        return <div></div>
+      },
+      add: function(addition) {
+        num += addition
+      }
+    })
+    const inst = new Component()
+    inst.element
+    expect(num).toBe(2)
+  })
+  it('cries if we try to overwrite base properties', function() {
+    expect(function() {
+      const Component = component({
+        renderView: function() {
+          return <div></div>
+        },
+        dispose: function() {
+
+        }
+      })
+    }).toThrow()
+  })
 })
