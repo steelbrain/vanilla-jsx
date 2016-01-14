@@ -124,11 +124,11 @@
         const nestedChildrenLength = nestedChildren.length
         if (nestedChildrenLength === 1) {
           const nestedChild = nestedChildren[0]
-          domElement.appendChild(typeof nestedChild === 'object' ? nestedChild : document.createTextNode(nestedChild))
+          domElement.appendChild(typeof nestedChild === 'object' ? createDOMElements(nestedChild) : document.createTextNode(nestedChild))
         } else {
           for (let n = 0; n < nestedChildrenLength; ++n) {
             const nestedChild = nestedChildren[n]
-            domElement.appendChild(typeof nestedChild === 'object' ? nestedChild : document.createTextNode(nestedChild))
+            domElement.appendChild(typeof nestedChild === 'object' ? createDOMElements(nestedChild) : document.createTextNode(nestedChild))
           }
         }
       }
