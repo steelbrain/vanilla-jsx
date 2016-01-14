@@ -155,9 +155,7 @@
     }
     class CurrentComponent extends Component { }
     for (let key in component) {
-      if (key === 'render') {
-        CurrentComponent.prototype['renderView'] = component[key]
-      } else if (CurrentComponent[key]) {
+      if (CurrentComponent.prototype[key]) {
         throw new Error(`Key '${key}' not allowed in component`)
       } else CurrentComponent.prototype[key] = component[key]
     }
