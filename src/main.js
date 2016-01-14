@@ -70,6 +70,16 @@
         }
       }
     }
+    domElement.refs = {}
+    const childrenRefs = domElement.querySelectorAll('[ref]')
+    const childrenRefsLength = childrenRefs.length
+    if (childrenRefs) {
+      for (let i = 0; i < childrenRefsLength; ++i) {
+        const child = childrenRefs[i]
+        domElement.refs[child.getAttribute('ref')] = child
+        child.removeAttribute('ref')
+      }
+    }
     return domElement
   }
 
