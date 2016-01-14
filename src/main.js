@@ -14,7 +14,22 @@
       return this._element
     }
     render(...params) {
-
+      let element = null
+      if (params.length === 1) {
+        element = this.renderView(params[0])
+      } else if (params.length === 2) {
+        element = this.renderView(params[0], params[1])
+      } else if (params.length === 3) {
+        element = this.renderView(params[0], params[1], params[2])
+      } else if (params.length === 4) {
+        element = this.renderView(params[0], params[1], params[2])
+      } else {
+        element = this.renderView.apply(this, params)
+      }
+      if (this._element && this._element.parentNode) {
+        this._element.parentNode.replaceChild(element, this._element)
+      }
+      this._element = element
     }
     renderAsString() {
 
@@ -49,56 +64,10 @@
   if (typeof module !== 'undefined') {
     module.exports.component = component
     module.exports.jsx = jsx
+  } else if (typeof window !== 'undefined') {
+    window.vanilla = {component, jsx}
+  } else if (typeof self !== 'undefined') {
+    self.vanilla = {component, jsx}
   }
 
 })()
-function jsx(name, attributes, ...children) {
-  const element = document.createElement(name)
-
-  if (typeof attributes === 'object' && attributes)
-  for (let attrName in attributes) {
-    if (attributes.hasOwnProperty(attrName)) {
-      if (attrName.substr(0, 3) === 'on-') {
-        element.addEventListener(attrName.substr(3).toLowerCase(), attributes[attrName])
-      } else {
-        if (attrName === 'className') {
-          element.setAttribute('class', attributes[attrName])
-        } else {
-          element.setAttribute(attrName, attributes[attrName])
-        }
-      }
-    }
-  }
-
-  children.forEach(function(child) {
-    if (typeof child === 'string') {
-      element.appendChild(document.createTextNode(child))
-    } else if (child.constructor.name === 'Array') {
-      child.forEach(function(nestedChild) {
-        if (typeof nestedChild === 'string') {
-          element.appendChild(document.createTextNode(nestedChild))
-        } else {
-          element.appendChild(nestedChild)
-        }
-      })
-    } else {
-      element.appendChild(child)
-    }
-  })
-
-  return element
-}
-
-function process(element) {
-  // Processes the ref attributes
-
-  element.refs = {}
-  Array.prototype.forEach.call(element.querySelectorAll('[ref]'), function(child) {
-    element.refs[child.getAttribute('ref')] = child
-    child.removeAttribute('ref')
-  })
-
-  return element
-}
-
-module.exports = {jsx, process}
