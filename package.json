@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/steelbrain/vanilla-jsx/issues"
   },
-  "homepage": "https://github.com/steelbrain/vanilla-jsx#readme"
+  "homepage": "https://github.com/steelbrain/vanilla-jsx#readme",
+  "dependencies": {
+    "escape-html": "^1.0.3"
+  }
 }
