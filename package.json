@@ -1,6 +1,6 @@
 {
   "name": "vanilla-jsx",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "description": "JSX in, HTMLElements out",
   "main": "lib/main.js",
   "scripts": {
