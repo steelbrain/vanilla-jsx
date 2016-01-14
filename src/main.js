@@ -4,17 +4,23 @@
   'use strict'
 
   class Component {
-    constructor(tagName, renderView) {
-      this.element = null
+    constructor() {
+      this._element = null
     }
-    render() {
+    get element() {
+      if (this._element === null) {
+        this.render()
+      }
+      return this._element
+    }
+    render(...params) {
 
     }
     renderAsString() {
 
     }
     dispose() {
-      this.element = null
+      this._element = null
     }
   }
 
@@ -22,23 +28,18 @@
     if (typeof component !== 'object') {
       throw new Error('Invalid component params provided')
     }
-    if (typeof component.tagName !== 'string') {
-      throw new Error('tagName must be string')
-    }
     if (typeof component.renderView !== 'function') {
       throw new Error('renderView must be a function')
     }
     const currentComponent = Object.create(Component)
     for (let key in component) {
-      if (key === 'tagName') {
-        // No-Op
-      } else if (key === 'render') {
-        currentComponent['renderView'] = component[key]
+      if (key === 'render') {
+        currentComponent.prototype['renderView'] = component[key]
       } else if (currentComponent[key]) {
         throw new Error(`Key '${key}' not allowed in component`)
-      } else currentComponent[key] = component[key]
+      } else currentComponent.prototype[key] = component[key]
     }
-    return new currentComponent(component.tagName)
+    return currentComponent
   }
 
   export function jsx(name, attributes, ...children) {
