@@ -13,35 +13,53 @@ Vanilla-JSX is a library that converts JSX into vanilla HTML Elements.
 #### API
 
 ```js
-// Responsible for creating HTML Elements from JSX
-export function jsx(name, attributes, ...children): HTMLElement {}
-// To be executed on result from JSX method
-export function process(element): HTMLElement {}
-
+class Component {
+  get element(): HTMLElement
+  render(...args): void
+  renderToString(...args): string
+  dispose(): void
+}
+export function jsx(name, attributes, ...children)
+export function createClass(object): Component
 ```
 
 #### Example
 ```js
 'use babel'
 
-import vanilla from 'vanilla-jsx'
-/** @jsx vanilla.jsx */
+import {createClass as createJSXClass, jsx} from 'vanilla-jsx'
+/** @jsx jsx */
+// ^ the above comment is required for babel
 
-export class Message {
-  constructor(message) {
-    this.element = Message.getElement()
-    console.log(this.element instanceof HTMLElement)
-    // ^ true!
-  }
-  static getElement(message) {
-    return vanilla.process(<div>
-      <span>{message.name}</span>
+const Message = createJSXClass({
+  renderView: function(message) {
+    this.logMessageCreation(message)
+    return <div>
+      <span>{message.time}</span>
+      <span>{message.from}</span>
       <span>{message.text}</span>
-      <span>{message.filePath}</span>
-      {message.trace.map(Message.getElement)}
-    </div>)
+    </div>
+  },
+  logMessageCreation: function(message) {
+    // do something with `message`
   }
-}
+})
+
+const messageFromBob = new Message()
+messageFromBob.render({
+  time: Date.now() - (1000 * 60 * 60),
+  from: 'Bob',
+  text: 'Hey'
+})
+document.body.appendChild(messageFromBob.element)
+
+const messageFromJohn = new Message()
+messageFromJohn.render({
+  time: Date.now() - (1000 * 60 * 60 * 2),
+  from: 'John',
+  text: 'Hey'
+})
+document.body.appendChild(messageFromJohn.element)
 ```
 
 #### LICENSE
