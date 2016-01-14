@@ -28,6 +28,9 @@
       } else {
         element = this.renderView.apply(this, params)
       }
+      if (typeof element !== 'object' || !Array.isArray(element.children)) {
+        throw new Error('renderView method returned invalid result')
+      }
       element = createDOMElements(element)
       if (this._element && this._element.parentNode) {
         this._element.parentNode.replaceChild(element, this._element)
@@ -49,6 +52,9 @@
         element = this.renderView(params[0], params[1], params[2])
       } else {
         element = this.renderView.apply(this, params)
+      }
+      if (typeof element !== 'object' || !Array.isArray(element.children)) {
+        throw new Error('renderView method returned invalid result')
       }
       return createStringElements(element)
     }
