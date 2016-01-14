@@ -146,7 +146,7 @@
     return domElement
   }
 
-  function component(component) {
+  function createClass(component) {
     if (typeof component !== 'object') {
       throw new Error('Invalid component params provided')
     }
@@ -167,12 +167,12 @@
   }
 
   if (typeof module !== 'undefined') {
-    module.exports.component = component
+    module.exports.createClass = createClass
     module.exports.jsx = jsx
   } else if (typeof window !== 'undefined') {
-    window.vanilla = {component, jsx}
+    window.vanilla = {createClass, jsx}
   } else if (typeof self !== 'undefined') {
-    self.vanilla = {component, jsx}
+    self.vanilla = {createClass, jsx}
   }
 
 })()

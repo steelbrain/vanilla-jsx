@@ -2,50 +2,50 @@
 
 /** @jsx jsx */
 
-import {component, jsx} from '../'
+import {createClass, jsx} from '../'
 
 describe('Vanilla-JSX', function() {
   it('cries if no parameter is given', function() {
     expect(function() {
-      component()
+      createClass()
     }).toThrow()
   })
   it('cries if no renderView method is given', function() {
     expect(function() {
-      component({})
+      createClass({})
     }).toThrow()
   })
   it('cries if invalid renderView method is given', function() {
     expect(function() {
-      component({
+      createClass({
         renderView: true
       })
     }).toThrow()
   })
   it('cries if renderView doesnt return valid JSX', function() {
     expect(function() {
-      new (component({
+      new (createClass({
         renderView: function() {
           return {}
         }
       }))().render()
     }).toThrow()
     expect(function() {
-      new (component({
+      new (createClass({
         renderView: function() {
           return null
         }
       }))().render()
     }).toThrow()
     expect(function() {
-      new (component({
+      new (createClass({
         renderView: function() {
           return false
         }
       }))().render()
     }).toThrow()
     expect(function() {
-      new (component({
+      new (createClass({
         renderView: function() {
           return []
         }
@@ -56,7 +56,7 @@ describe('Vanilla-JSX', function() {
   describe('rendering', function() {
     it('triggers render', function() {
       let triggered = false
-      const Component = component({
+      const Component = createClass({
         renderView: function() {
           triggered = true
           return (<div></div>)
@@ -69,7 +69,7 @@ describe('Vanilla-JSX', function() {
     })
     it('gives zero parameters to render', function() {
       let argumentsCount = null
-      const Component = component({
+      const Component = createClass({
         renderView: function() {
           argumentsCount = arguments.length
           return (<div></div>)
@@ -83,7 +83,7 @@ describe('Vanilla-JSX', function() {
   })
   it('does not trigger render if its already rendered', function() {
     let triggered = 0
-    const Component = component({
+    const Component = createClass({
       renderView: function() {
         triggered++
         return (<div></div>)
@@ -96,7 +96,7 @@ describe('Vanilla-JSX', function() {
     expect(triggered).toBe(1)
   })
   it('is an html element with correct nested children', function() {
-    const Component = component({
+    const Component = createClass({
       renderView: function() {
         return <div>
           <span>
@@ -118,7 +118,7 @@ describe('Vanilla-JSX', function() {
     expect(inst.element.childNodes[1].childNodes[0].tagName).toBe('A')
   })
   it('has correct attributes', function() {
-    const Component = component({
+    const Component = createClass({
       renderView: function() {
         return <div data-a="a" data-b="b"></div>
       }
@@ -130,7 +130,7 @@ describe('Vanilla-JSX', function() {
     expect(inst.element.getAttribute('data-b')).toBe('b')
   })
   it('translates className attribute into class', function() {
-    const Component = component({
+    const Component = createClass({
       renderView: function() {
         return <div className="test"></div>
       }
@@ -140,7 +140,7 @@ describe('Vanilla-JSX', function() {
   })
   it('attaches event listeners', function() {
     const listener = jasmine.createSpy('vanilla-jsx-event-listener')
-    const Component = component({
+    const Component = createClass({
       renderView: function() {
         return <div on-click={listener}></div>
       }
@@ -150,7 +150,7 @@ describe('Vanilla-JSX', function() {
     expect(listener).toHaveBeenCalled()
   })
   it('works with array children', function() {
-    const Component = component({
+    const Component = createClass({
       renderView: function() {
         const items = [1, 2,3]
         return <div>{items.map(i => <span>{i}</span>)}</div>
@@ -166,7 +166,7 @@ describe('Vanilla-JSX', function() {
     expect(inst.element.childNodes[2].textContent).toBe('3')
   })
   it('supports ref attribute', function() {
-    const Component = component({
+    const Component = createClass({
       renderView: function() {
         return <div><span><a ref="link" href="#">Wow</a></span></div>
       }
@@ -178,7 +178,7 @@ describe('Vanilla-JSX', function() {
   it('passes parameters from render to renderView', function() {
     const params = [{}, {}, {}]
     let wasCalled = false
-    const Component = component({
+    const Component = createClass({
       renderView: function(param1, param2, param3) {
         wasCalled = true
         expect(param1).toBe(params[0])
@@ -192,7 +192,7 @@ describe('Vanilla-JSX', function() {
     expect(wasCalled).toBe(true)
   })
   it('produces same HTML and string results', function() {
-    const Component = component({
+    const Component = createClass({
       renderView: function() {
         return <div>
           <span>
@@ -210,7 +210,7 @@ describe('Vanilla-JSX', function() {
   it('passes all parameters from renderToString to renderView', function() {
     const params = [{}, {}, {}]
     let wasCalled = false
-    const Component = component({
+    const Component = createClass({
       renderView: function(param1, param2, param3) {
         wasCalled = true
         expect(param1).toBe(params[0])
@@ -225,7 +225,7 @@ describe('Vanilla-JSX', function() {
   })
   it('passes parameters from given object to view prototype', function() {
     let num = 0
-    const Component = component({
+    const Component = createClass({
       renderView: function() {
         this.add(2)
         return <div></div>
@@ -240,7 +240,7 @@ describe('Vanilla-JSX', function() {
   })
   it('cries if we try to overwrite base properties', function() {
     expect(function() {
-      const Component = component({
+      const Component = createClass({
         renderView: function() {
           return <div></div>
         },
