@@ -65,11 +65,14 @@
     const attributes = []
     if (element.attributes !== null) {
       for (let key in element.attributes) {
+        if (key.length > 4 && key.substr(0, 3) === 'on-') {
+          continue
+        }
         if (key === 'className') {
           key = 'class'
         }
         const value = element.attributes[key]
-        attributes.push(escapeHTML(key) + '=' + escape(value))
+        attributes.push(escapeHTML(key) + '=' + escapeHTML(value))
       }
     }
     const childrenLength = element.children.length
@@ -97,10 +100,14 @@
     const domElement = document.createElement(element.name)
     if (element.attributes !== null) {
       for (let key in element.attributes) {
+        const value = element.attributes[key]
+        if (key.length > 4 && key.substr(0, 3) === 'on-') {
+          domElement.addEventListener(key.substr(3).toLocaleLowerCase(), value)
+          continue
+        }
         if (key === 'className') {
           key = 'class'
         }
-        const value = element.attributes[key]
         domElement.setAttribute(key, typeof value === 'function' ? value() : value)
       }
     }
