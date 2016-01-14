@@ -26,6 +26,7 @@
       } else {
         element = this.renderView.apply(this, params)
       }
+      element = createDOMElements(element)
       if (this._element && this._element.parentNode) {
         this._element.parentNode.replaceChild(element, this._element)
       }
@@ -37,6 +38,39 @@
     dispose() {
       this._element = null
     }
+  }
+
+  function createDOMElements(element) {
+    if (typeof element !== 'object' || element === null || !Array.isArray(element.children)) {
+      throw new Error('Invalid element provided', element)
+    }
+    const domElement = document.createElement(element.name)
+    if (element.attributes !== null) {
+      for (let key in element.attributes) {
+        if (key === 'className') {
+          key = 'class'
+        }
+        const value = element.attributes[key]
+        domElement.setAttribute(key, typeof value === 'function' ? value() : value)
+      }
+    }
+    const childrenLength = element.children.length
+    if (childrenLength) {
+      for (let i = 0; i < childrenLength; ++i) {
+        const nestedChildren = [].concat(element.children[i])
+        const nestedChildrenLength = nestedChildren.length
+        if (nestedChildrenLength === 1) {
+          const nestedChild = nestedChildren[0]
+          domElement.appendChild(typeof nestedChild === 'object' ? nestedChild : document.createTextNode(nestedChild))
+        } else {
+          for (let n = 0; n < nestedChildrenLength; ++n) {
+            const nestedChild = nestedChildren[n]
+            domElement.appendChild(typeof nestedChild === 'object' ? nestedChild : document.createTextNode(nestedChild))
+          }
+        }
+      }
+    }
+    return domElement
   }
 
   function component(component) {
