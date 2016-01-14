@@ -31,7 +31,7 @@
       }
       this._element = element
     }
-    renderAsString() {
+    renderToString() {
 
     }
     dispose() {
@@ -39,25 +39,25 @@
     }
   }
 
-  export function component(component) {
+  function component(component) {
     if (typeof component !== 'object') {
       throw new Error('Invalid component params provided')
     }
     if (typeof component.renderView !== 'function') {
       throw new Error('renderView must be a function')
     }
-    const currentComponent = Object.create(Component)
+    class CurrentComponent extends Component { }
     for (let key in component) {
       if (key === 'render') {
-        currentComponent.prototype['renderView'] = component[key]
-      } else if (currentComponent[key]) {
+        CurrentComponent.prototype['renderView'] = component[key]
+      } else if (CurrentComponent[key]) {
         throw new Error(`Key '${key}' not allowed in component`)
-      } else currentComponent.prototype[key] = component[key]
+      } else CurrentComponent.prototype[key] = component[key]
     }
-    return currentComponent
+    return CurrentComponent
   }
 
-  export function jsx(name, attributes, ...children) {
+  function jsx(name, attributes, ...children) {
     return {name, attributes, children}
   }
 
