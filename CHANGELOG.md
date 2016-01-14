@@ -1,3 +1,16 @@
+#### 3.0.0
+
+Re-implement as a component base, features include
+
+ - renderToString for `node`
+ - render for browsers
+ - Support for `ref` attribute
+ - Support for event listeners in `<div on-click={myFunction}>` syntax
+ - Translation of className attribute into class
+ - Acceptance of arrays as childNodes
+ - Acceptance of functions as attribute values, they are called on usage and their return value is used
+ - More test cases
+
 #### 2.0.2
 
  - Improve support for nested children
