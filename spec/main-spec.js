@@ -191,4 +191,36 @@ describe('Vanilla-JSX', function() {
     inst.render(params[0], params[1], params[2])
     expect(wasCalled).toBe(true)
   })
+  it('produces same HTML and string results', function() {
+    const Component = component({
+      renderView: function() {
+        return <div>
+          <span>
+            <a href="#">Hey</a>
+          </span>
+          <span>
+            <a href="#">Yo</a>
+          </span>
+        </div>
+      }
+    })
+    const inst = new Component()
+    expect(inst.element.outerHTML).toBe(inst.renderToString())
+  })
+  it('passes all parameters from renderToString to renderView', function() {
+    const params = [{}, {}, {}]
+    let wasCalled = false
+    const Component = component({
+      renderView: function(param1, param2, param3) {
+        wasCalled = true
+        expect(param1).toBe(params[0])
+        expect(param2).toBe(params[1])
+        expect(param3).toBe(params[2])
+        return <div></div>
+      }
+    })
+    const inst = new Component()
+    inst.renderToString(params[0], params[1], params[2])
+    expect(wasCalled).toBe(true)
+  })
 })
