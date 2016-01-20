@@ -175,6 +175,15 @@ describe('Vanilla-JSX', function() {
     expect(inst.element.refs.link).toBe(inst.element.childNodes[0].childNodes[0])
     expect(inst.element.refs.link.hasAttribute('ref')).toBe(false)
   })
+  it('proxifies refs from element to instance', function() {
+    const Component = createClass({
+      renderView: function() {
+        return <div><span><a ref="link" href="#">Wow</a></span></div>
+      }
+    })
+    const inst = new Component()
+    expect(inst.element.refs).toBe(inst.refs)
+  })
   it('passes parameters from render to renderView', function() {
     const params = [{}, {}, {}]
     let wasCalled = false

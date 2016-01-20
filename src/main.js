@@ -8,6 +8,7 @@
   class Component {
     constructor() {
       this._element = null
+      this.refs = {}
     }
     get element() {
       if (this._element === null) {
@@ -46,6 +47,7 @@
         this._element.parentNode.replaceChild(element, this._element)
       }
       this._element = element
+      this.refs = element.refs
     }
     renderToString(...params) {
       if (escapeHTML === null) {
