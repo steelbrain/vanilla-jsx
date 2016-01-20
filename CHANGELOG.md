@@ -1,3 +1,9 @@
+#### 3.0.1
+
+New features
+
+ - Refs are now proxified from the element to instance
+
 #### 3.0.0
 
 Re-implement as a component base, features include
