@@ -37,9 +37,12 @@ const Message = createJSXClass({
     return <div>
       <span>{message.time}</span>
       <span>{message.from}</span>
-      <span>{message.text}</span>
+      <span ref="text">{message.text}</span>
     </div>
   },
+  changeText(text) {
+    this.refs.text.textContent = text
+  }
   logMessageCreation: function(message) {
     // do something with `message`
   }
@@ -52,6 +55,7 @@ messageFromBob.render({
   text: 'Hey'
 })
 document.body.appendChild(messageFromBob.element)
+messageFromBob.changeText("I'm the new text!")
 
 const messageFromJohn = new Message()
 messageFromJohn.render({
