@@ -48,6 +48,7 @@
       }
       this._element = element
       this.refs = element.refs
+      return element
     }
     renderToString(...params) {
       if (escapeHTML === null) {

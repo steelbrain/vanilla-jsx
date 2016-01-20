@@ -1,3 +1,7 @@
+#### 3.0.2
+
+ - `render` method now returns the rendered HTMLElement
+
 #### 3.0.1
 
 New features

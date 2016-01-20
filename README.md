@@ -16,7 +16,7 @@ Vanilla-JSX is a library that converts JSX into vanilla HTML Elements.
 class Component {
   get element(): HTMLElement
   get refs(): Object<string, HTMLElement>
-  render(...args): void
+  render(...args): HTMLElement
   renderToString(...args): string
   dispose(): void
 }
