@@ -1,6 +1,8 @@
 Vanilla-JSX
 =========
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/steelbrain/vanilla-jsx.svg)](https://greenkeeper.io/)
+
 Vanilla-JSX is a library that converts JSX into vanilla HTML Elements.
 
 #### Features
